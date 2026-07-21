@@ -49,6 +49,10 @@ def message_receive_event_handler(req_data: MessageReceiveEvent):
     message_api_client.send_text_with_open_id(open_id, text_content)
     return jsonify()
 
+@event_manager.register("im.message.reaction.created_v1")
+def message_reaction_created_event_handler(req_data: MessageReceiveEvent):
+    print("message_reaction_created_event_handler", req_data)
+    return jsonify()
 
 @app.errorhandler
 def msg_error_handler(ex):

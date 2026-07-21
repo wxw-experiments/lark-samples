@@ -4,7 +4,7 @@ import os
 import logging
 import requests
 from api import MessageApiClient
-from event import MessageReceiveEvent, UrlVerificationEvent, EventManager
+from event import MessageReceiveEvent, UrlVerificationEvent, EventManager, MessageReactionCreatedEvent
 from flask import Flask, jsonify
 from dotenv import load_dotenv, find_dotenv
 
@@ -46,11 +46,12 @@ def message_receive_event_handler(req_data: MessageReceiveEvent):
     open_id = sender_id.open_id
     text_content = message.content
     # echo text message
-    message_api_client.send_text_with_open_id(open_id, text_content)
+    print("echo text message to user", open_id, text_content)
+    # message_api_client.send_text_with_open_id(open_id, text_content)
     return jsonify()
 
 @event_manager.register("im.message.reaction.created_v1")
-def message_reaction_created_event_handler(req_data: MessageReceiveEvent):
+def message_reaction_created_event_handler(req_data: MessageReactionCreatedEvent):
     print("message_reaction_created_event_handler", req_data)
     return jsonify()
 
